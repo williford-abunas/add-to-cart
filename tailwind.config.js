@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        body: ['M PLUS 1 Code', monospace],
+        body: ['M PLUS 1 Code'],
       },
     },
   },
