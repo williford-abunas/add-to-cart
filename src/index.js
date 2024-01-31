@@ -9,15 +9,6 @@ if (itemsInStorage) {
   render(itemsArray)
 }
 
-function render(list) {
-  let listItems = ''
-
-  for (let i = 0; i < list.length; i++) {
-    listItems += `<li class = "bg-[#DCE1EB] text-[#432000] p-2 rounded-md shadow-md text-sm grow text-center">${list[i]}</li>`
-  }
-  ulEl.innerHTML = listItems
-}
-
 buttonEl.addEventListener('click', function () {
   let inputValue = inputEl.value
   itemsArray.push(inputValue)
@@ -26,80 +17,37 @@ buttonEl.addEventListener('click', function () {
   render(itemsArray)
 })
 
-// function setToMyListStorage(val) {
-//   itemsArray.push(val)
-//   localStorage.setItem('myList', JSON.stringify(itemsArray))
+function render(list) {
+  let listItems = ''
 
-// if (itemsArray[0]) {
-//   let itemsInStorage = JSON.parse(localStorage.getItem('myList'))
-//   console.log(itemsInStorage)
-//   // appendItemToUl(itemsInStorage)
-// }
-// }
+  for (let i = 0; i < list.length; i++) {
+    let liEl = document.createElement('li')
+    liEl.id = `list-el-${i}`
+    liEl.className =
+      'bg-[#DCE1EB] text-[#432000] p-2 rounded-md shadow-md text-sm grow text-center'
+    liEl.textContent = list[i]
+
+    listItems += liEl.outerHTML
+  }
+
+  ulEl.innerHTML = listItems
+
+  // Add a single click event listener to the ulEl for handling all li clicks
+  ulEl.addEventListener('click', function (event) {
+    const target = event.target
+    // Check if the clicked element is an li element
+    if (target.tagName === 'LI') {
+      // Extract the index from the id
+      const index = parseInt(target.id.split('-')[2])
+      // Remove the item at the specified index
+      itemsArray.splice(index, 1)
+      // Update local storage and re-render the list
+      localStorage.setItem('myList', JSON.stringify(itemsArray))
+      render(itemsArray)
+    }
+  })
+}
 
 function clearInput() {
   inputEl.value = ''
 }
-
-// function appendItemToUl(arr) {
-//   let newEl = document.createElement('li')
-
-//   for (let i = 0; i < arr.length; i++) {
-//     let item = arr[i]
-//     console.log(item)
-//   }
-// }
-
-// function clearUlEl() {
-//   ulEl.innerHTML = ''
-// }
-
-// //fetch itemListinDB
-// onValue(itemListinDB, function (snapshot) {
-//   if (snapshot.exists()) {
-//     let itemsArray = Object.entries(snapshot.val())
-
-//     clearShoppingList()
-
-//     for (let i = 0; i < itemsArray.length; i++) {
-//       let currentItem = itemsArray[i]
-//       let currentItemID = currentItem[0]
-//       let currentItemValue = currentItem[1]
-
-//       appendItemToList(currentItem)
-//     }
-//   } else {
-//     ulEl.innerHTML = 'No items here... yet'
-//   }
-// })
-
-// function clearShoppingList() {
-//   ulEl.innerHTML = ''
-// }
-
-// function appendItemToList(item) {
-//   let itemID = item[0]
-//   let itemValue = item[1]
-
-//   let newLi = document.createElement('li')
-//   newLi.classList.add(
-//     'bg-[#DCE1EB]',
-//     'text-[#432000]',
-//     'p-2',
-//     'rounded-md',
-//     'shadow-md',
-//     'text-sm',
-//     'grow',
-//     'text-center'
-//   )
-
-//   newLi.textContent = itemValue
-
-//   newLi.addEventListener('click', function () {
-//     let locationOfItemInDB = ref(database, `itemList/${itemID}`)
-
-//     remove(locationOfItemInDB)
-//   })
-
-//   ulEl.append(newLi)
-// }
