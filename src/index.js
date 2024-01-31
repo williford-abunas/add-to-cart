@@ -13,45 +13,46 @@ function render(list) {
   let listItems = ''
 
   for (let i = 0; i < list.length; i++) {
-    listItems += `<li>${list[i]}</li>`
+    listItems += `<li class = "bg-[#DCE1EB] text-[#432000] p-2 rounded-md shadow-md text-sm grow text-center">${list[i]}</li>`
   }
   ulEl.innerHTML = listItems
 }
 
 buttonEl.addEventListener('click', function () {
   let inputValue = inputEl.value
-  setToMyListStorage(inputValue)
+  itemsArray.push(inputValue)
+  localStorage.setItem('myList', JSON.stringify(itemsArray))
   clearInput()
-  // appendItemToUl(itemsInStorage)
+  render(itemsArray)
 })
 
-function setToMyListStorage(val) {
-  itemsArray.push(val)
-  localStorage.setItem('myList', JSON.stringify(itemsArray))
+// function setToMyListStorage(val) {
+//   itemsArray.push(val)
+//   localStorage.setItem('myList', JSON.stringify(itemsArray))
 
-  // if (itemsArray[0]) {
-  //   let itemsInStorage = JSON.parse(localStorage.getItem('myList'))
-  //   console.log(itemsInStorage)
-  //   // appendItemToUl(itemsInStorage)
-  // }
-}
+// if (itemsArray[0]) {
+//   let itemsInStorage = JSON.parse(localStorage.getItem('myList'))
+//   console.log(itemsInStorage)
+//   // appendItemToUl(itemsInStorage)
+// }
+// }
 
 function clearInput() {
   inputEl.value = ''
 }
 
-function appendItemToUl(arr) {
-  let newEl = document.createElement('li')
+// function appendItemToUl(arr) {
+//   let newEl = document.createElement('li')
 
-  for (let i = 0; i < arr.length; i++) {
-    let item = arr[i]
-    console.log(item)
-  }
-}
+//   for (let i = 0; i < arr.length; i++) {
+//     let item = arr[i]
+//     console.log(item)
+//   }
+// }
 
-function clearUlEl() {
-  ulEl.innerHTML = ''
-}
+// function clearUlEl() {
+//   ulEl.innerHTML = ''
+// }
 
 // //fetch itemListinDB
 // onValue(itemListinDB, function (snapshot) {
