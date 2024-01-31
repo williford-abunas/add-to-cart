@@ -2,6 +2,21 @@ const inputEl = document.getElementById('input-el')
 const buttonEl = document.getElementById('button-el')
 const ulEl = document.getElementById('ul-el')
 let itemsArray = []
+const itemsInStorage = JSON.parse(localStorage.getItem('myList'))
+
+if (itemsInStorage) {
+  itemsArray = itemsInStorage
+  render(itemsArray)
+}
+
+function render(list) {
+  let listItems = ''
+
+  for (let i = 0; i < list.length; i++) {
+    listItems += `<li>${list[i]}</li>`
+  }
+  ulEl.innerHTML = listItems
+}
 
 buttonEl.addEventListener('click', function () {
   let inputValue = inputEl.value
@@ -14,11 +29,11 @@ function setToMyListStorage(val) {
   itemsArray.push(val)
   localStorage.setItem('myList', JSON.stringify(itemsArray))
 
-  if (itemsArray[0]) {
-    let itemsInStorage = JSON.parse(localStorage.getItem('myList'))
-    console.log(itemsInStorage)
-    // appendItemToUl(itemsInStorage)
-  }
+  // if (itemsArray[0]) {
+  //   let itemsInStorage = JSON.parse(localStorage.getItem('myList'))
+  //   console.log(itemsInStorage)
+  //   // appendItemToUl(itemsInStorage)
+  // }
 }
 
 function clearInput() {
