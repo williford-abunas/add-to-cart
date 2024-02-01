@@ -18,7 +18,7 @@ buttonEl.addEventListener('click', function () {
 })
 
 function render(list) {
-  let listItems = ''
+  ulEl.innerHTML = '' // Clear the existing content
 
   for (let i = 0; i < list.length; i++) {
     let liEl = document.createElement('li')
@@ -27,25 +27,19 @@ function render(list) {
       'bg-[#DCE1EB] text-[#432000] p-2 rounded-md shadow-md text-sm grow text-center'
     liEl.textContent = list[i]
 
-    listItems += liEl.outerHTML
-  }
-
-  ulEl.innerHTML = listItems
-
-  // Add a single click event listener to the ulEl for handling all li clicks
-  ulEl.addEventListener('click', function (event) {
-    const target = event.target
-    // Check if the clicked element is an li element
-    if (target.tagName === 'LI') {
+    // Add event listener to each li element
+    liEl.addEventListener('click', function () {
       // Extract the index from the id
-      const index = parseInt(target.id.split('-')[2])
+      const index = parseInt(liEl.id.split('-')[2])
       // Remove the item at the specified index
       itemsArray.splice(index, 1)
-      // Update local storage and re-render the list
+      // Update local storage and re-render the specific li element
       localStorage.setItem('myList', JSON.stringify(itemsArray))
       render(itemsArray)
-    }
-  })
+    })
+
+    ulEl.appendChild(liEl)
+  }
 }
 
 function clearInput() {
